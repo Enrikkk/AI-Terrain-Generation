@@ -1,42 +1,47 @@
-# Procedural Terrain & Artificial Ecosystem Simulation
+# AI Procedural Terrain Generation & Artificial Ecosystem Simulation
+
+**GitHub Repository:** [Enrikkk/AI-Terrain-Generation](https://github.com/Enrikkk/AI-Terrain-Generation)
 
 ## Overview
-This project focuses on implementing physics-based interactions, environmental dynamics, and artificial life into a procedural terrain system. Moving beyond static mesh generation, the environment features a Newtonian day/night cycle, dynamic atmospheric weather, procedural vegetation spawning, and a living ecosystem of flora and fauna. 
 
-## Key Features
+This project is a continuously evolving Unity simulation that combines procedural generation, physics-based interactions, and artificial life into a dynamic, living ecosystem. Instead of a static map, the environment features a Newtonian day/night cycle, atmospheric weather, highly procedural vegetation, and autonomous entities that navigate the terrain via flow fields and mathematical oscillations.
 
-### 1. Physics-Based Day/Night Cycle
-Instead of a simple rotation animation, the celestial bodies (Sun and Moon) are physical objects controlled by Newton’s Laws of Universal Gravitation.
-* **Orbital Mechanics:** The Sun and Moon are Rigidbodies that orbit the terrain based on gravitational forces applied towards a central mass point. The orbit is maintained by balancing an initial tangential velocity vector against a constant centripetal gravitational pull. 
-* **Cycle & Lighting:** The simulation runs on a complete 20-minute day/night cycle. Both celestial bodies feature child Directional Lights that dynamically track the map center, shifting light intensity and color temperature to simulate warm days and cold, dim nights.
+This project was built iteratively to explore advanced topics in AI for Game Development.
 
-### 2. Dynamic Weather & Atmosphere
-Atmospheric depth is simulated using noise algorithms to enhance environmental realism.
-* **Dynamic Fog:** Fog density is driven by Perlin Noise, creating a "rolling mist" effect where the thickness randomly varies over time. 
-* **Day/Night Integration:** The fog's color interpolates based on the sun's position relative to the horizon, appearing as a gray mist during the day and shifting to pitch black at night.
+---
 
-### 3. Procedural Vegetation & Ecosystems
-Vegetation generation is fully integrated into the terrain pipeline, bringing life and color to the map.
-* **Biome Logic & LOD:** Trees spawn probabilistically based on height data, resulting in higher tree density in lower elevations (valleys and plains) while peaks remain barren. All trees utilize Level of Detail (LOD) groups to maintain high performance.
-* **Cherry Blossoms:** To add vibrancy, approximately 10% of all generated trees are cherry blossoms.
-* **Dynamic Wildlife (Bees):** To pollinate the cherry blossoms, bees actively fly around the tree canopies. Their movement is governed by a custom triple sine script that allows them to wander smoothly through 3D space. 
-Additionally, Perlin Noise dynamically adjusts their velocity on the fly, making their flight patterns feel organic, varied, and unpredictable.
+## Project Evolution & Iterations
 
-### 4. Interactivity
-* **Map Regeneration:** The system supports runtime map regeneration, allowing users to create a completely unique seed and terrain layout on demand.
+### [Iteration 1: Setting the Foundation](./README_ITERATION1.md)
+The first iteration laid the groundwork for the core simulation. 
+* **Procedural Environments:** Integrated dynamic fog driven by Perlin Noise that shifts into pitch black during nighttime.
+* **Flora & Fauna Initialization:** Established the base structure for procedural trees, specifically implementing rare Cherry Blossom variations (10% spawn chance) alongside the initial logic for buzzing bees around the canopies, controlled via Custom Triple Sine mathematical oscillation.
+* **Runtime Regeneration:** Allowed the user to regenerate a completely new seeded map on demand.
 
-## Art & Textures
-The custom textures for the Sun, Moon, cherry blossom trees, and bees were generated using Google Gemini (specifically utilizing the Nano Banana image generation model for the flora and fauna assets).
+### [Iteration 2: The Physics Framework](./README_ITERATION2.md)
+The second iteration transformed the static skybox into a physically accurate universe.
+* **Newtonian Heavenly Bodies:** The Sun and the Moon were converted to physical Rigidbodies. Instead of basic rotation scripting, they orbit the terrain using Newton's Laws of Universal Gravitation, balancing centripetal force and tangential velocity.
+* **Dynamic Lighting Shifts:** Directional lights attached to the orbiting bodies were programmed to aggressively track the map center and shift color temperature to naturally simulate day (warm) and night (cold).
+* **Biome Logic & LODs:** Implemented probabilistic tree spawning based on elevation heights (valleys vs peaks) and hooked the trees into Unity's LOD groups for vast performance improvements.
 
-## Technical Implementation
-* **Physics:** Utilizes Unity Rigidbody and Constant Force applications inside `FixedUpdate`.
-* **Algorithms:** Relies heavily on Perlin Noise for terrain height, fog density, and dynamic bee velocity. Also implements probability functions for tree spawning and custom triple sine oscillation for entity movement.
+### [Iteration 3: Breathing Life into the Map](./README_ITERATION3.md)
+The third iteration focused completely on creating a vibrant, moving ecosystem instead of just adding more raw terrain features.
+* **Dynamic Pollinators:** Greatly refined the bees around the Cherry Blossom trees. 
+* **Organic Flight Patterns:** Instead of just simple sine wave oscillation, Perlin Noise was layered into the bees' velocity vectors. This combination allowed the bees to wander naturally and unpredictably through the 3D space of the tree canopy.
+* **Generative Art Generation:** Assets and textures for the Sun, Moon, trees, and specifically the bees were AI-generated through Google Gemini's image models to fit a cohesive aesthetic perfectly.
 
-## Known Issues
-* **Terrain Texturing:** The terrain currently utilizes a default material. The logic for applying splat maps based on height and slope is still under development and is not functioning in this current build.
+### [Iteration 4: Flow Fields, Flocking & Shaders](./README_ITERATION4.md)
+The fourth iteration heavily expanded the map's complexities, adding water shaders and a massive flocking algorithm system.
+* **Aesthetic Water & Textures:** Solved underlying logic bugs in the splat map application to accurately blend rock, dirt, and grass textures according to terrain height. A new water layer was added utilizing a gorgeous Unity Asset Store shader, while forcing the underlying basin terrain to exclusively utilize the "dirt" texture.
+* **Grid Systems & Flow Fields:** A robust, invisible 100x100 Grid System was programmed to drape directly over the map. Every cell inside the grid calculates a specific directional vector represented physically via arrows.
+* **Dynamic Bird Flocks:** Flocking bird prefabs (varying from 1 to 15 birds per flock) were introduced to act as "Vehicles". Their individual animators were forcibly de-synchronized for organic wing-flapping. They accurately read the arrow vector stored deeply in their local Grid cell, steering smoothly and gracefully utilizing mass and maxForce values toward its heading. 
+* **Interactive Winds:** The underlying grid vectors can be universally shifted via Keyboard inputs:
+  * `P`: Shuffles the universal flow field using scaled **Perlin Noise** to ensure birds take massive, sweeping, unified paths over the map.
+  * `G`: Shuffles the universal flow field randomly via a **Gaussian Distribution**.
+
+---
 
 ## Future Roadmap
-* **Texture Implementation:** Resolve shader and layer issues to correctly apply grass, rock, and snow textures based on biome height.
-* **Interactive Forces:** Implement a global wind system capable of pushing entities (like the bees) and interacting with the environment.
-* **Expanded Artificial Life:** Add more wildlife and autonomous agents that wander the map using force-based steering behaviors or random movement patterns.
-* **Player Implementation:** Introduce a controllable player character to allow users to experience the physical forces and living entities firsthand.
+- **UI System:** Bring an explicit User Interface overlay to document interactable controls for the user inside the game.
+- **Visibility Toggles:** Allow users to hide or reveal the Flow Field system vectors during runtime so they can visually "debug" the flock's decisions.
+- **Game View Transition:** Expand the simulation beyond the Scene window so that everything is interactable entirely from the Playable Game View camera.
