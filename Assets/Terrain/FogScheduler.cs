@@ -19,7 +19,7 @@ public class FogScheduler : MonoBehaviour
     {
         dayColor = new Color(0.5f, 0.6f, 0.7f);
         nightColor = Color.black;
-        fogVal = Random.Range(0f, 10000f);
+        fogVal = Random.Range(0f, 100f);
         fogInc = 0.1f;
         fogIncMult = Random.Range(0.2f, 0.6f);
 

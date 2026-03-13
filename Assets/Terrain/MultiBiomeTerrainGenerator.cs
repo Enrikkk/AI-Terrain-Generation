@@ -13,6 +13,7 @@ public class MultiBiomeTerrainGenerator : MonoBehaviour
 
     public Terrain terrain;
     public GameObject beePrefab;
+    public GameObject waterPrefab; // Drag a URP water plane prefab (e.g. "Stylized Water 2") here in the Inspector.
     private float biomeScale; // Specific scale used for biomes, not very big no make biomes big too (we don't want a 10x10 biome surrounded by other kind of biomes...)
 
     public BiomePreset mountainZone;
@@ -20,6 +21,8 @@ public class MultiBiomeTerrainGenerator : MonoBehaviour
     public BiomePreset desertZone;
 
     // Height values - for biome styling.
+    // Water height is randomized each generation within a small, natural-looking range.
+    private float waterHeight;
     private float grassHeight = 0.15f;
     private float dirtHeight = 0.20f;
 
@@ -45,6 +48,9 @@ public class MultiBiomeTerrainGenerator : MonoBehaviour
         desertZone = new BiomePreset();
         desertZone.scale = 20f;
         desertZone.heightMultiplier = 15f;
+
+        // Randomize water level slightly each generation (between dry and flooded-looking maps)
+        waterHeight = Random.Range(0.06f, 0.10f);
 
         if(terrain == null)
             terrain = GetComponent<Terrain>();
@@ -102,6 +108,7 @@ public class MultiBiomeTerrainGenerator : MonoBehaviour
         // Final functions for adding more life to the terrain.
         PaintTerrain();
         GenerateTrees();
+        SpawnWater();
     }
 
     // Auxiliar function to paint the terrain.
@@ -124,14 +131,18 @@ public class MultiBiomeTerrainGenerator : MonoBehaviour
 
                 float height = data.GetInterpolatedHeight(y_01, x_01) / data.size.y; // height in meters and normalized.
 
-                // Array if layers.
+                // Array of layers.
                 float[] splat = new float[3];
 
-                if (height < 0.15f) // Grass.
+                if (height < waterHeight + 0.03) // Underwater (Dirt/Sand)
+                {
+                    splat[0] = 0; splat[1] = 1; splat[2] = 0; // Dirt
+                }
+                else if (height < grassHeight + 0.15f) // Grass.
                 {
                     splat[0] = 1; splat[1] = 0; splat[2] = 0; // 1.0 = Full visibility, 0.0 = Invisible.
                 }
-                else if (height < 0.20f) // Dirt.
+                else if (height < dirtHeight + 0.15f) // Dirt.
                 {
                     splat[0] = 0; splat[1] = 1; splat[2] = 0;
                 }
@@ -213,9 +224,13 @@ public class MultiBiomeTerrainGenerator : MonoBehaviour
                 
                 float height = data.GetInterpolatedHeight(normX, normZ) / data.size.y;
                 
-                if(height < grassHeight && Random.Range(0f, 1f) < 0.008f) { addTree = true; }
-                else if(height < dirtHeight && Random.Range(0f, 1f) < 0.005f) { addTree = true; }
-                else if(height >= dirtHeight && Random.Range(0f, 1f) < 0.003f) { addTree = true; }
+                // Do not spawn trees underwater!
+                if(height > waterHeight) 
+                {
+                    if(height < grassHeight && Random.Range(0f, 1f) < 0.008f) { addTree = true; }
+                    else if(height < dirtHeight && Random.Range(0f, 1f) < 0.005f) { addTree = true; }
+                    else if(height >= dirtHeight && Random.Range(0f, 1f) < 0.003f) { addTree = true; }
+                }
                 
                 if(addTree) 
                 {
@@ -258,6 +273,36 @@ public class MultiBiomeTerrainGenerator : MonoBehaviour
         terrain.Flush();                            
         Debug.Log("Tree Generation Complete. Total Trees Planted: " + treeList.Count);
         Debug.Log("Bees flying around: " + spawnedBees);
+    }
+
+    // Spawns the water plane at the correct world-space height and scale.
+    void SpawnWater()
+    {
+        if (waterPrefab == null)
+        {
+            Debug.LogWarning("waterPrefab is not assigned! Please drag a URP water prefab into the Inspector.");
+            return;
+        }
+
+        TerrainData data = terrain.terrainData;
+        float terrainWidth  = data.size.x;
+        float terrainLength = data.size.z;
+
+        // Convert normalized waterHeight to world-space Y position.
+        float worldWaterY = terrain.transform.position.y + (waterHeight * mountainZone.heightMultiplier);
+
+        // Center of the terrain in world space.
+        float centerX = terrain.transform.position.x + terrainWidth  / 2f;
+        float centerZ = terrain.transform.position.z + terrainLength / 2f;
+
+        GameObject waterObj = Instantiate(waterPrefab, new Vector3(centerX, worldWaterY, centerZ), Quaternion.identity);
+        waterObj.name = "WaterSurface";
+
+        // Unity's default Plane primitive is 10x10 units, so divide terrain size by 10.
+        // If your prefab uses a different base size, adjust accordingly.
+        waterObj.transform.localScale = new Vector3(terrainWidth / 10f, 1f, terrainLength / 10f);
+
+        Debug.Log($"Water spawned at Y={worldWaterY:F2} (normalized waterHeight={waterHeight:F3})");
     }
 
     void Update()
