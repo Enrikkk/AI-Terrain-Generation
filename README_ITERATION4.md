@@ -33,7 +33,7 @@ Instead of insects, I decided to build a flow field for birds!
 The flow field vectors aren't static; you can change them on the fly using keyboard inputs! The field defaults to a Perlin Noise distribution initially.
 
 - **Press `P`**: Randomizes the arrows using **Perlin Noise**. I tweaked the noise scale so the arrows roughly point in a somewhat similar flow direction, taking wide sweeping paths. This distinguishes the movement from Gaussian noise!
-- **Press `G`**: Randomizes the arrows using a **Gaussian Distribution**.
+- **Press `R`**: Randomizes the arrows using a **Gaussian Distribution**.
 
 ## Future Plans
 

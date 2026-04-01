@@ -75,3 +75,6 @@ crashlytics-build.properties
 .vscode/
 .DS_Store
 Thumbs.db
+
+# Claude Code context file — do not upload to GitHub
+CLAUDE.md

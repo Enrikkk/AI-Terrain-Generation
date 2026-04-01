@@ -21,15 +21,20 @@ public class FlowField : MonoBehaviour
 
         this.PerlinNoiseFlowFieldArrows();
         this.SpawnVehicles();
+
+        // Debug visuals start hidden.
+        gridSystemVisual.gameObject.SetActive(false);
     }
     
     private void SpawnVehicles() {
         if (vehiclePrefabs == null || vehiclePrefabs.Length == 0) return;
-        
+
         float minX = this.transform.position.x;
         float minZ = this.transform.position.z;
         float maxX = minX + (gridSystem.GetWidth() * gridSystem.GetCellSize());
         float maxZ = minZ + (gridSystem.GetHeight() * gridSystem.GetCellSize());
+
+        GameObject birdContainer = new GameObject("Bird Flocks");
 
         for (int i = 0; i < vehicleSpawnCount; i++) {
             // Generate a random position strictly inside the boundaries of the Flow Field map.
@@ -44,9 +49,12 @@ public class FlowField : MonoBehaviour
 
             // Instantiate a new randomly-sized bird group!
             Vehicle newVehicle = Instantiate(randomPrefab, randomPosition, Quaternion.identity);
-            
+
             // Scale the birds up by 5 times.
             newVehicle.transform.localScale = Vector3.one * 12f;
+
+            // Keep hierarchy clean.
+            newVehicle.transform.parent = birdContainer.transform;
 
             // Link it to the grid so it can fetch its own arrows.
             newVehicle.assignFlowField(this);
@@ -66,6 +74,7 @@ public class FlowField : MonoBehaviour
         // Check if we have pressed the R key. In that case, randomize the direction of the flow field arrows.
         if(Input.GetKeyDown(KeyCode.R)) { RandomizeFlowFieldArrows(); }
         if(Input.GetKeyDown(KeyCode.P)) { PerlinNoiseFlowFieldArrows(); }
+        if(Input.GetKeyDown(KeyCode.H)) { gridSystemVisual.gameObject.SetActive(!gridSystemVisual.gameObject.activeSelf); }
     }
 
     // Function to randomize the direction of all the arrows in the flow field.
