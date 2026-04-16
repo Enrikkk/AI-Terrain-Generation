@@ -53,7 +53,7 @@ The sixth iteration connected the underground cave to the surface world and made
 
 ---
 
-## Future Roadmap
-- **UI System:** Bring an explicit User Interface overlay to document interactable controls for the user inside the game.
-- **Visibility Toggles:** Allow users to hide or reveal the Flow Field system vectors during runtime so they can visually "debug" the flock's decisions.
-- **Game View Transition:** Expand the simulation beyond the Scene window so that everything is interactable entirely from the Playable Game View camera.
+## Future Plans
+
+- **Village Generation**: Next iteration will use L-Systems to procedurally generate surface structures — roads, building footprints, and settlements — directly on the multi-biome terrain.
+- **Cave Lighting**: Dynamic point lights or torch placements inside caves to improve underground navigation without relying on emission-only lighting.
