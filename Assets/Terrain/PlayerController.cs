@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class PlayerController : MonoBehaviour
 {
     // Attributes
@@ -23,6 +24,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float flySpeed = 20f;
     [SerializeField] private float fastFlyMultiplier = 3f;
     private bool isFlying = false;
+
+    [Header("Player Portal Interaction Settings")]
+    public float initialPortalCooldownTime = 5f;
+    public float actualPortalCooldownTime = 0f;
     
     // State Tracking
     private Vector3 currentVelocity = Vector3.zero;
@@ -49,6 +54,10 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if(this.actualPortalCooldownTime > 0f) { 
+            this.actualPortalCooldownTime -= Time.deltaTime;
+            this.actualPortalCooldownTime = Mathf.Max(0f, this.actualPortalCooldownTime);
+        }
         this.HandleMovement();      // Function to move the player if requested.
         this.HandleView();          // Function to handle the rotation of the head and body based on the mouse movement.
     }
@@ -162,6 +171,11 @@ public class PlayerController : MonoBehaviour
 
         // Finally, apply the pitch (vertical) rotation.
         this.cameraTransform.localEulerAngles = new Vector3(this.pitch, 0f, 0f);
+    }
+
+    // Function to make the player not teleport again through a portal for some time if it already did that.
+    public void startPortalCoolDown() {
+        this.actualPortalCooldownTime = this.initialPortalCooldownTime;
     }
 
 }

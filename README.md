@@ -39,6 +39,18 @@ The fourth iteration heavily expanded the map's complexities, adding water shade
   * `P`: Shuffles the universal flow field using scaled **Perlin Noise** to ensure birds take massive, sweeping, unified paths over the map.
   * `G`: Shuffles the universal flow field randomly via a **Gaussian Distribution**.
 
+### [Iteration 5: Player Controller and Cave Systems](./README_ITERATION5.md)
+The fifth iteration made the simulation fully playable and introduced procedural underground caves.
+* **First-Person Player Controller:** Full walk/sprint/jump physics with acceleration and friction, flight mode (`F` key), and mouse-look with pitch/yaw clamping.
+* **3D Cave Generation:** A 100×100×40 cellular automata grid (5 smoothing passes) produces organic cave geometry converted to a smooth triangle mesh via the Marching Cubes algorithm.
+* **Marching Cubes:** 256-configuration TriTable lookup, vertex welding for watertight meshes, and triplanar UV mapping for seamless rock texturing.
+
+### [Iteration 6: Portal System & Cave-Surface Integration](./README_ITERATION6.md)
+The sixth iteration connected the underground cave to the surface world and made the cave fully playable.
+* **Bidirectional Portal System:** Procedurally paired portals spawn at runtime — one on the terrain surface, one on the cave floor. Smart destination logic uses `Physics.Raycast` for safe cave landings and `terrain.SampleHeight` for surface returns.
+* **Cave Interior Collision:** Fixed one-sided `MeshCollider` by reversing Marching Cubes triangle winding order, flipping normals inward so cave walls and floors are solid from inside.
+* **Cave-Surface Integration:** Replaced the broken `SetHoles` approach with a portal spawner that scans the cellular automata grid for valid floor cells and pairs them with the surface portal at runtime.
+
 ---
 
 ## Future Roadmap

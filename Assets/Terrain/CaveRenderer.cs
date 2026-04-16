@@ -124,6 +124,7 @@ public class CaveRenderer : MonoBehaviour
         {
             if(MarchingCubesTables.TriTable[cubeIndex, i] == -1) break;
 
+            int[] triIndices = new int[3];
             for(int j = 0; j < 3; j++)
             {
                 Vector3 v = edgeVertices[MarchingCubesTables.TriTable[cubeIndex, i + j]];
@@ -133,8 +134,12 @@ public class CaveRenderer : MonoBehaviour
                     vertices.Add(v);
                     vertexMap[v] = idx;
                 }
-                triangles.Add(idx);
+                triIndices[j] = idx;
             }
+            // Reversed winding order (0,2,1 instead of 0,1,2) flips normals inward.
+            triangles.Add(triIndices[0]);
+            triangles.Add(triIndices[2]);
+            triangles.Add(triIndices[1]);
         }
     }
 

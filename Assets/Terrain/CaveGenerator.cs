@@ -5,9 +5,9 @@ public class CaveGenerator : MonoBehaviour
 {
     // Attributes.
     [Header("Terrain Settings")]
-    public int gridWidth = 30; // Cave system size.
-    public int gridDepth = 30;
-    public int gridHeight = 30;
+    public int gridWidth = 100; // Cave system size.
+    public int gridDepth = 100;
+    public int gridHeight = 40;
     public int cellSize = 5;
     public double fillPercent = 0.45; // How filled the cave system initially is.
     public int smoothingIterations = 5; // Number of Celullar Automata Iterations that will be run in order to smooth the terrain.
@@ -16,8 +16,9 @@ public class CaveGenerator : MonoBehaviour
     [Header("Array of Grid Cells")]
     public bool[,,] grid;
     private int[,,] rocksSurroundingCell; // Amount of rock surrounding a single cell in the cave system.
+    private List<Vector3Int> airCells = new List<Vector3Int>();
 
-    void Start()
+    void Awake()
     {
         // Auto-position the cave below the terrain base.
         Terrain terrain = Terrain.activeTerrain;
@@ -30,20 +31,63 @@ public class CaveGenerator : MonoBehaviour
             );
         }
 
-        // Now, we fill up the grid using these.
+        // Fill up the grid.
         this.initialiseGrid();
 
-        // And finally, we run various smoothing iterations of the cave system using celullar automata.
+        // Run smoothing iterations using cellular automata.
         for(int i = 0; i < this.smoothingIterations; ++i)
         {
             this.smoothCaveSystem();
         }
 
-        // Punch holes in the terrain above air cells on the top layer.
-        this.CreateCaveEntrances(terrain);
+        this.countAirCells(); // Done here and once -> Allows portal creation in the cave system in a more efficient way.
+    }
 
+    private void countAirCells() 
+    {
+        // Collect all air cells from the middle Y layers (avoid top/bottom boundary rock).
+        int yMin = this.gridHeight / 4;
+        int yMax = (this.gridHeight * 3) / 4;
+
+        for(int x = 1; x < this.gridWidth - 1; x++)
+            for(int y = yMin; y < yMax; y++)
+                for(int z = 1; z < this.gridDepth - 1; z++)
+                    if(!this.grid[x, y, z] && y + 1 < this.gridHeight && this.grid[x, y + 1, z]) // AIR cell with ROCK directly below = floor
+                        this.airCells.Add(new Vector3Int(x, y, z));
+    }
+
+    void Start()
+    {
         // Hand the finished grid to the renderer.
         GetComponent<CaveRenderer>().RenderCave(this.grid, this.gridWidth, this.gridHeight, this.gridDepth, this.cellSize);
+    }
+
+    // Spawns a portal at a random AIR cell inside the cave and returns it.
+    public GameObject SpawnPortalInsideCave(GameObject portalPrefab, Terrain terrain)
+    {
+        if(airCells.Count == 0)
+        {
+            Debug.LogWarning("No air cells found inside cave to spawn portal!");
+            return null;
+        }
+
+        // Pick a random air cell.
+        Vector3Int cell = airCells[Random.Range(0, airCells.Count)];
+
+        // Convert grid position to world position (Y is negated — cave digs downward).
+        Vector3 worldPos = this.transform.position + new Vector3(
+            cell.x * this.cellSize,
+           -cell.y * this.cellSize,
+            cell.z * this.cellSize
+        );
+
+        GameObject portal = Instantiate(portalPrefab, worldPos, Quaternion.identity);
+        portal.transform.localScale *= 2.5f;
+        Portal portalComponent = portal.GetComponentInChildren<Portal>();
+        portalComponent.setTerrain(terrain);
+        portalComponent.setCavePortal(true);
+
+        return portal;
     }
 
     // Auxiliary function to initialise the Grid.
@@ -119,7 +163,7 @@ public class CaveGenerator : MonoBehaviour
     }
 
     // Punches holes in the terrain and carves smooth bowl depressions at the shallowest cave entrance locations.
-    private void CreateCaveEntrances(Terrain terrain)
+    private void CreateCaveEntrances(Terrain terrain) // Not used -> Re`ñaced by portal logic.
     {
         if(terrain == null) return;
 

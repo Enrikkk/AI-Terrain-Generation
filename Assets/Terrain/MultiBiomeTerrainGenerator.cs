@@ -13,7 +13,9 @@ public class MultiBiomeTerrainGenerator : MonoBehaviour
 
     public Terrain terrain;
     public GameObject beePrefab;
-    public GameObject waterPrefab; // Drag a URP water plane prefab (e.g. "Stylized Water 2") here in the Inspector.
+    public GameObject waterPrefab;
+    public List<GameObject> portalPrefabs;
+    public CaveGenerator caveGenerator;
     private float biomeScale; // Specific scale used for biomes, not very big no make biomes big too (we don't want a 10x10 biome surrounded by other kind of biomes...)
 
     public BiomePreset mountainZone;
@@ -51,6 +53,9 @@ public class MultiBiomeTerrainGenerator : MonoBehaviour
 
         // Randomize water level slightly each generation (between dry and flooded-looking maps)
         waterHeight = Random.Range(0.06f, 0.10f);
+
+        // Initialize portal prefabs list.
+        //this.portalPrefabs = new List<GameObject>();
 
         if(terrain == null)
             terrain = GetComponent<Terrain>();
@@ -109,6 +114,31 @@ public class MultiBiomeTerrainGenerator : MonoBehaviour
         PaintTerrain();
         GenerateTrees();
         SpawnWater();
+
+        for(int i = 0; i < Random.Range(5, 15); ++i) // Generate random amount of surface-cave portal pairs.
+        {
+            GameObject surfacePortal = SpawnPortal("random"); // Spawn random surface portal.
+
+            // Spawn a random cave portal.
+            if(caveGenerator != null)
+            {
+                GameObject cavePortal = caveGenerator.SpawnPortalInsideCave(portalPrefabs[Random.Range(0, portalPrefabs.Count)], this.terrain);
+                if(cavePortal != null)
+                    PairPortals(surfacePortal, cavePortal); // Pair them (you can teleport from one to the other and vice-versa).
+            }
+        }
+    }
+
+    void PairPortals(GameObject portalA, GameObject portalB)
+    {
+        Portal scriptA = portalA.GetComponentInChildren<Portal>();
+        Portal scriptB = portalB.GetComponentInChildren<Portal>();
+
+        if (scriptA != null && scriptB != null)
+        {
+            scriptA.otherPortal = portalB;
+            scriptB.otherPortal = portalA;
+        }
     }
 
     // Auxiliar function to paint the terrain.
@@ -303,6 +333,55 @@ public class MultiBiomeTerrainGenerator : MonoBehaviour
         waterObj.transform.localScale = new Vector3(terrainWidth / 10f, 1f, terrainLength / 10f);
 
         Debug.Log($"Water spawned at Y={worldWaterY:F2} (normalized waterHeight={waterHeight:F3})");
+    }
+
+    // Function to spawn a portal (randomly portal style chosen) in the middle of the map.
+    GameObject SpawnPortal(string position)
+    {
+        if (this.portalPrefabs.Count == 0) // List is empty -> No profabs have been assigned -> Give error. 
+        {
+            Debug.LogWarning("Portal Prefabs have not been assigned!! Please assign your prefabs to the portalPrefabs list.");
+        }
+
+        // Then, if list of prefabs have been assigned we just proceed to create one based on the given position.
+        // First, get terrain data.
+        TerrainData data = terrain.terrainData;
+        float terrainWidth = data.size.x;
+        float terrainLength = data.size.z;
+        
+        float terrainCenterX = terrain.transform.position.x + terrainWidth/2f;
+        float terrainCenterZ = terrain.transform.position.z + terrainLength/2f;
+        float terrainBaseY = terrain.transform.position.y; // Base terrain position, afterwards we will have to calculate the height of the given position (it might be a hill, for example).
+
+        float portalX = 0f;
+        float portalZ= 0f;
+
+        if (position == "random")
+        {
+            float shiftX = Random.Range(0.0f, 1.0f); // Generate a float between 0 and 1.
+            float shiftZ = Random.Range(0.0f, 1.0f);
+
+            // Instantiate a random position for the portal.
+            // Shift it (up to) half of the map size of a given dimension since we are starting on the middle.
+            // The -5 is so that the portal isn't generated just at the very edge of the map (unlikely but possible).
+            portalX = terrainCenterX + (Random.value > 0.5f ? 1 : -1) * (shiftX * (terrainWidth / 2f) - 5f);
+            portalZ = terrainCenterZ + (Random.value > 0.5f ? 1 : -1) * shiftZ * (terrainLength / 2f) - 5f;
+        }
+        else if (position == "center")
+        {
+            portalX = terrainCenterX;
+            portalZ = terrainCenterZ;
+        }
+
+
+        // Quaternion.identity to make portal not be rotated/shifted due to initial position of the parent object.
+        // We dynamically sample the Y coordinate from the terrain given the X and Z coordinates.
+        // In the terrain.SampleHeight function we give 0 as the Y input because Unity just ignores that value, so anything could be used there.
+        GameObject portal = Instantiate(this.portalPrefabs[Random.Range(0, portalPrefabs.Count)], new Vector3(portalX, terrain.SampleHeight(new Vector3(portalX, 0, portalZ)), portalZ), Quaternion.identity);
+        Portal portalComponent = portal.GetComponentInChildren<Portal>();
+        portalComponent.setTerrain(this.terrain);
+        portal.transform.localScale *= 2.5f; // Make the portal bigger.
+        return portal;
     }
 
     void Update()

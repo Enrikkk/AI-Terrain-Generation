@@ -38,6 +38,6 @@ public class FogScheduler : MonoBehaviour
         float perlinFog = Mathf.PerlinNoise(fogVal, 0);
         fogVal += fogInc * fogIncMult * Time.deltaTime;
 
-        RenderSettings.fogDensity = Unity.Mathematics.math.remap(0f, 1f, 0.001f, 0.02f, perlinFog);
+        RenderSettings.fogDensity = Unity.Mathematics.math.remap(0f, 1f, 0.001f, 0.011f, perlinFog);
     }
 }
