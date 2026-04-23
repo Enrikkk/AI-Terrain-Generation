@@ -51,9 +51,13 @@ The sixth iteration connected the underground cave to the surface world and made
 * **Cave Interior Collision:** Fixed one-sided `MeshCollider` by reversing Marching Cubes triangle winding order, flipping normals inward so cave walls and floors are solid from inside.
 * **Cave-Surface Integration:** Replaced the broken `SetHoles` approach with a portal spawner that scans the cellular automata grid for valid floor cells and pairs them with the surface portal at runtime.
 
+### [Iteration 7: L-System Village Generation (Exploratory)](./README_ITERATION7.md)
+The seventh iteration began exploring procedural village generation using L-Systems.
+* **L-System Grammar Engine:** Implemented a pure C# `LSystemGenerator` class with a configurable axiom, production rules dictionary, and N-iteration string rewriting using `StringBuilder` for performance.
+* **Koch Curve Road Layout:** Designed the grammar axiom `F+F+F+F` with rule `F → F+F-F-F+F` at 90° angle, generating ~500 draw commands after 3 iterations — the foundation of a procedural road network.
+
 ---
 
-## Future Plans
+## Project Status
 
-- **Village Generation**: Next iteration will use L-Systems to procedurally generate surface structures — roads, building footprints, and settlements — directly on the multi-biome terrain.
-- **Cave Lighting**: Dynamic point lights or torch placements inside caves to improve underground navigation without relying on emission-only lighting.
+This project is **complete**. Six fully functional iterations were delivered across the semester, demonstrating the following AI and game development techniques: procedural terrain generation (Perlin Noise, multi-biome splat mapping), Newtonian orbital physics, artificial life (triple sine bee movement, Perlin-modulated velocity), flow field navigation with bird flocks, a first-person player controller, procedural cave generation (3D cellular automata + Marching Cubes), and a bidirectional portal system. A seventh exploratory iteration introduced the foundations of L-System grammar for procedural village generation.
