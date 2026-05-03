@@ -39,7 +39,7 @@ The second iteration transformed the static skybox into a physically accurate un
 * **Biome Logic & LODs:** Implemented probabilistic tree spawning based on elevation heights (valleys vs peaks) and hooked the trees into Unity's LOD groups for vast performance improvements.
 
 <p align="center">
-  <video src="visuals/videos/day_night_cycle.webm" controls width="100%"></video>
+  <video src="https://github.com/Enrikkk/AI-Terrain-Generation/releases/download/readme-media/day_night_cycle.webm" controls width="100%"></video>
   <br>
   <i>Initial scene state — the Sun sits above the terrain and the Moon below it. From here Newton's laws of universal gravitation and Kepler's Third Law take over and the 20-minute orbital cycle begins.</i>
 </p>
@@ -66,7 +66,7 @@ The third iteration focused completely on creating a vibrant, moving ecosystem i
 * **Generative Art Generation:** Assets and textures for the Sun, Moon, trees, and specifically the bees were AI-generated through Google Gemini's image models to fit a cohesive aesthetic perfectly.
 
 <p align="center">
-  <video src="visuals/videos/bees.webm" controls width="100%"></video>
+  <video src="https://github.com/Enrikkk/AI-Terrain-Generation/releases/download/readme-media/bees.webm" controls width="100%"></video>
   <br>
   <i>Bees wandering around a cherry blossom canopy via triple-sine oscillation with Perlin-noise-modulated velocity.</i>
 </p>
@@ -83,7 +83,7 @@ The fourth iteration heavily expanded the map's complexities, adding water shade
   * `G`: Shuffles the universal flow field randomly via a **Gaussian Distribution**.
 
 <p align="center">
-  <video src="visuals/videos/flow_field.webm" controls width="100%"></video>
+  <video src="https://github.com/Enrikkk/AI-Terrain-Generation/releases/download/readme-media/flow_field.webm" controls width="100%"></video>
   <br>
   <i>Bird flocks steering through the grid's flow field — press <code>H</code> to toggle the arrow visualization, <code>P</code>/<code>R</code> to reshuffle the field with Perlin or Gaussian noise.</i>
 </p>
@@ -97,13 +97,13 @@ The fifth iteration made the simulation fully playable and introduced procedural
 * **Marching Cubes:** 256-configuration TriTable lookup, vertex welding for watertight meshes, and triplanar UV mapping for seamless rock texturing.
 
 <p align="center">
-  <video src="visuals/videos/movement.webm" controls width="100%"></video>
+  <video src="https://github.com/Enrikkk/AI-Terrain-Generation/releases/download/readme-media/movement.webm" controls width="100%"></video>
   <br>
   <i>First-person player controller — walk, sprint, jump, and <code>F</code> flight mode for free traversal.</i>
 </p>
 
 <p align="center">
-  <video src="visuals/videos/cave_system.webm" controls width="100%"></video>
+  <video src="https://github.com/Enrikkk/AI-Terrain-Generation/releases/download/readme-media/cave_system.webm" controls width="100%"></video>
   <br>
   <i>Exterior fly-by of the generated cave system — the Marching Cubes mesh emerging out of the cellular-automata voxel grid, with triplanar rock UVs already applied.</i>
 </p>
@@ -117,7 +117,7 @@ The sixth and final iteration connected the underground cave to the surface worl
 * **Cave-Surface Integration:** Replaced the broken `SetHoles` approach with a portal spawner that scans the cellular automata grid for valid floor cells and pairs them with the surface portal at runtime.
 
 <p align="center">
-  <video src="visuals/videos/portals.webm" controls width="100%"></video>
+  <video src="https://github.com/Enrikkk/AI-Terrain-Generation/releases/download/readme-media/portals.webm" controls width="100%"></video>
   <br>
   <i>Walking into the surface portal, raycasting onto the cave floor, exploring, then teleporting back via <code>terrain.SampleHeight</code>.</i>
 </p>
