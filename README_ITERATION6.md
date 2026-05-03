@@ -2,6 +2,10 @@
 
 **GitHub Repository:** [Enrikkk/AI-Terrain-Generation](https://github.com/Enrikkk/AI-Terrain-Generation)
 
+<p align="center">
+  <img src="visuals/images/hero_shot.png" alt="The full ecosystem with the surface portal ring visible mid-frame" width="100%">
+</p>
+
 Welcome to the 6th and **final** iteration of the project! This phase completed the cave system introduced in iteration 5 by solving its biggest open problem: how to actually connect the underground cave to the surface world. The solution was a fully procedural, bidirectional portal system that spawns multiple paired portals at runtime — each pair linking a surface portal to a cave floor portal — and teleports the player between them seamlessly. Along the way, several critical issues were resolved: cave interior collision was broken, player teleportation required a tricky physics workaround, and finding a safe landing spot inside the cave required dynamic raycasting.
 
 ---
@@ -9,6 +13,10 @@ Welcome to the 6th and **final** iteration of the project! This phase completed 
 ## Portal System
 
 The portal system is built around a single `Portal.cs` script attached to a trigger collider. When the player walks through the collider, the script calculates a safe destination in the other world and moves them there.
+
+<p align="center">
+  <img src="visuals/gifs/portals.gif" alt="Walking into the surface portal, raycasting onto the cave floor, and teleporting back via terrain.SampleHeight" width="100%">
+</p>
 
 ### Detection
 

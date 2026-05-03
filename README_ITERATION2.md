@@ -1,6 +1,11 @@
 # Procedural Terrain & Physics Simulation (Iteration 2)
 
 **GitHub Repository:** [Enrikkk/AI-Terrain-Generation](https://github.com/Enrikkk/AI-Terrain-Generation)
+
+<p align="center">
+  <img src="visuals/images/sunset.png" alt="Golden-hour sunset over the multi-biome terrain" width="80%">
+</p>
+
 ## Overview
 
 This iteration focuses on implementing physics-based interactions and environmental dynamics into the procedural terrain system. The major update introduces a Newtonian day/night cycle and procedural vegetation spawning, moving beyond static mesh generation.
@@ -16,6 +21,23 @@ Instead of a simple rotation animation, the celestial bodies (Sun and Moon) are 
 * **Cycle Duration:** The simulation is tuned for a complete 20-minute day/night cycle.
 * **Lighting:** Both celestial bodies have child Directional Lights that dynamically track the map center. Light intensity and color temperature shift to simulate realistic day (warm/bright) and night (cold/dim) ambients.
 * **Assets:** Sun and Moon spheres utilize custom textures generated via Google Gemini.
+
+<p align="center">
+  <img src="visuals/gifs/day_night_cycle.gif" alt="Initial state of the Sun/Moon orbit — Sun above the terrain, Moon below" width="100%">
+</p>
+
+<table>
+  <tr>
+    <td width="33%"><img src="visuals/images/sun_descending%20%28day%20cycle%29.png" alt="Sun descending — sky shifts from indigo to amber" width="100%"></td>
+    <td width="33%"><img src="visuals/images/sunset.png" alt="Golden-hour sunset over the hills and lakes" width="100%"></td>
+    <td width="33%"><img src="visuals/images/moon_rising.png" alt="Moon rising over the multi-biome terrain at night" width="100%"></td>
+  </tr>
+  <tr>
+    <td align="center"><i>Sun descending — sky gradient shifts indigo → amber.</i></td>
+    <td align="center"><i>Sunset — directional lights still warm.</i></td>
+    <td align="center"><i>Moon rising — color temperature has flipped cold.</i></td>
+  </tr>
+</table>
 
 ### 2. Dynamic Weather & Atmosphere
 

@@ -1,6 +1,11 @@
 # Project Iteration 4: Flow Fields, Flocks, and Textures
 
 **GitHub Repository:** [Enrikkk/AI-Terrain-Generation](https://github.com/Enrikkk/AI-Terrain-Generation)
+
+<p align="center">
+  <img src="visuals/images/hero_shot.png" alt="Multi-biome terrain with the new water shader, splat-mapped textures, and bird flocks across the sky" width="100%">
+</p>
+
 Welcome to the 4th iteration of the project! In this phase, the main goal was to breathe more life into the map by introducing dynamic entities and forces. Here is a breakdown of the thought process, implementations, and future plans.
 
 ## Initial Concepts vs. Reality
@@ -27,6 +32,10 @@ Instead of insects, I decided to build a flow field for birds!
 - **Flocking Vehicles:** I downloaded a free bird flocks asset from the Unity Asset Store, which includes prefabs for flocks of 1, 3, 5, 10, and 15 birds.
 - **Polymorphism in Action:** I used these bird prefabs as my vehicles, implementing the vehicle `MonoBehaviour` script and all the code regarding the grid system and the flow field, heavily utilizing the laws of Polymorphism.
 - **Polished Movement:** I tweaked their sizes, fixed their built-in Animator controllers so they actually flap their wings, and fine-tuned the physical forces (speed, mass, max force) applied to them. This creates incredibly smooth and dynamic bird flock movement that's interesting to watch.
+
+<p align="center">
+  <img src="visuals/gifs/flow_field.gif" alt="Bird flocks reading the per-cell arrows of the flow field and steering smoothly across the map" width="100%">
+</p>
 
 ## Interactive Flow Field Inputs
 

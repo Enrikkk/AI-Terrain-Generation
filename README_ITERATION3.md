@@ -1,6 +1,11 @@
 # 🌸 Development Update: Breathing Life into the Map
 
 **GitHub Repository:** [Enrikkk/AI-Terrain-Generation](https://github.com/Enrikkk/AI-Terrain-Generation)
+
+<p align="center">
+  <img src="visuals/images/forest%20image.png" alt="Procedural forest with cherry blossoms — the canopy where bees come to life" width="80%">
+</p>
+
 For this project iteration, I decided to take a slightly different approach from the previous ones. Instead of making massive structural changes to the terrain, I wanted to focus on something equally important: adding some actual *life* to the world!
 
 ## ✨ What's New?
@@ -13,6 +18,10 @@ For this project iteration, I decided to take a slightly different approach from
 To make the bees look natural rather than robotic, I implemented a few cool math tricks:
 * **Triple Sine Oscillation:** I created a custom triple sine script that allows the bees to wander freely and smoothly through all of the 3D space around the tree canopy.
 * **Perlin Noise Velocity:** The bees don't just move at a constant, boring speed. I used *Perlin Noise* to dynamically adjust their velocity on the fly, making their flight patterns feel organic, varied, and unpredictable.
+
+<p align="center">
+  <img src="visuals/gifs/bees.gif" alt="Bees wandering around a cherry blossom canopy — triple sine oscillation modulated by Perlin noise" width="100%">
+</p>
 
 ## 🎨 Art & Textures
 

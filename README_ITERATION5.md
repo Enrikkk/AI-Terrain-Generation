@@ -23,6 +23,10 @@ One of the key interactive features:
 
 The flight mode was essential for testing and exploring the cave system thoroughly during development.
 
+<p align="center">
+  <img src="visuals/gifs/movement.gif" alt="First-person player controller — walk, sprint, jump, and F-toggle flight" width="100%">
+</p>
+
 ## Flow Field Visualization Control
 
 Enhanced the existing flow field system with a visibility toggle:
@@ -104,6 +108,10 @@ This produces a smooth, continuous mesh instead of blocky cubes.
 - Caves have organic, naturally-flowing tunnel structures
 - Low-poly but smooth appearance suitable for game exploration
 - No major geometric artifacts or see-through gaps
+
+<p align="center">
+  <img src="visuals/gifs/cave_system.gif" alt="Exterior fly-by of the procedural cave — Marching Cubes mesh emerging from the cellular-automata voxel grid" width="100%">
+</p>
 
 **What Still Needs Work:**
 - **Cave Entrances**: Terrain holes (SetHoles) not yet visible; need to debug coordinate mapping between cave grid space and terrain height/hole maps

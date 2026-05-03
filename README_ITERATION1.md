@@ -1,6 +1,11 @@
 # Procedural Terrain & Artificial Ecosystem Simulation
 
 **GitHub Repository:** [Enrikkk/AI-Terrain-Generation](https://github.com/Enrikkk/AI-Terrain-Generation)
+
+<p align="center">
+  <img src="visuals/images/forest%20image.png" alt="Procedural forest with cherry blossoms scattered among the trees" width="80%">
+</p>
+
 ## Overview
 This project focuses on implementing physics-based interactions, environmental dynamics, and artificial life into a procedural terrain system. Moving beyond static mesh generation, the environment features a Newtonian day/night cycle, dynamic atmospheric weather, procedural vegetation spawning, and a living ecosystem of flora and fauna. 
 
@@ -10,6 +15,10 @@ This project focuses on implementing physics-based interactions, environmental d
 Instead of a simple rotation animation, the celestial bodies (Sun and Moon) are physical objects controlled by Newton’s Laws of Universal Gravitation.
 * **Orbital Mechanics:** The Sun and Moon are Rigidbodies that orbit the terrain based on gravitational forces applied towards a central mass point. The orbit is maintained by balancing an initial tangential velocity vector against a constant centripetal gravitational pull. 
 * **Cycle & Lighting:** The simulation runs on a complete 20-minute day/night cycle. Both celestial bodies feature child Directional Lights that dynamically track the map center, shifting light intensity and color temperature to simulate warm days and cold, dim nights.
+
+<p align="center">
+  <img src="visuals/gifs/day_night_cycle.gif" alt="Sun above the terrain and Moon below — the initial state of the orbital day/night cycle" width="100%">
+</p>
 
 ### 2. Dynamic Weather & Atmosphere
 Atmospheric depth is simulated using noise algorithms to enhance environmental realism.
@@ -22,6 +31,10 @@ Vegetation generation is fully integrated into the terrain pipeline, bringing li
 * **Cherry Blossoms:** To add vibrancy, approximately 10% of all generated trees are cherry blossoms.
 * **Dynamic Wildlife (Bees):** To pollinate the cherry blossoms, bees actively fly around the tree canopies. Their movement is governed by a custom triple sine script that allows them to wander smoothly through 3D space. 
 Additionally, Perlin Noise dynamically adjusts their velocity on the fly, making their flight patterns feel organic, varied, and unpredictable.
+
+<p align="center">
+  <img src="visuals/gifs/bees.gif" alt="Bees wandering around a cherry blossom canopy via triple sine + Perlin-modulated velocity" width="100%">
+</p>
 
 ### 4. Interactivity
 * **Map Regeneration:** The system supports runtime map regeneration, allowing users to create a completely unique seed and terrain layout on demand.
