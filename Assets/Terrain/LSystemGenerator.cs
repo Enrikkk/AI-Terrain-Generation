@@ -1,3 +1,8 @@
+// Iteration 7 (L-System village generation) — exploratory only, not part of
+// the final project. Wrapped in #if false so Unity's preprocessor strips the
+// body before compilation, leaving the source on disk for reference without
+// producing build errors.
+#if false
 using System.Collection.Generics;
 using System.Text;
 
@@ -40,3 +45,4 @@ public class LSystemGenerator
     }
 
 }
+#endif

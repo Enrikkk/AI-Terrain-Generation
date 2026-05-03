@@ -1,8 +1,8 @@
-# Project Iteration 6: Portal System & Cave-Surface Integration
+# Project Iteration 6: Portal System & Cave-Surface Integration (Final Iteration)
 
 **GitHub Repository:** [Enrikkk/AI-Terrain-Generation](https://github.com/Enrikkk/AI-Terrain-Generation)
 
-Welcome to the 6th iteration! This phase completed the cave system introduced in iteration 5 by solving its biggest open problem: how to actually connect the underground cave to the surface world. The solution was a fully procedural, bidirectional portal system that spawns multiple paired portals at runtime — each pair linking a surface portal to a cave floor portal — and teleports the player between them seamlessly. Along the way, several critical issues were resolved: cave interior collision was broken, player teleportation required a tricky physics workaround, and finding a safe landing spot inside the cave required dynamic raycasting.
+Welcome to the 6th and **final** iteration of the project! This phase completed the cave system introduced in iteration 5 by solving its biggest open problem: how to actually connect the underground cave to the surface world. The solution was a fully procedural, bidirectional portal system that spawns multiple paired portals at runtime — each pair linking a surface portal to a cave floor portal — and teleports the player between them seamlessly. Along the way, several critical issues were resolved: cave interior collision was broken, player teleportation required a tricky physics workaround, and finding a safe landing spot inside the cave required dynamic raycasting.
 
 ---
 
@@ -141,7 +141,8 @@ The Perlin-noise-driven fog in `FogScheduler.cs` was remapped from a density ran
 
 ---
 
-## Future Plans
+## Project Conclusion
 
-- **Village Generation**: Next iteration will use L-Systems to procedurally generate surface structures — roads, building footprints, and settlements — directly on the multi-biome terrain
-- **Cave Lighting**: Dynamic point lights or torch placements inside caves to improve underground navigation without relying on emission-only lighting
+Iteration 6 marks the end of the project. Across six iterations the simulation grew from a single Perlin-noise heightmap into a fully playable Unity world that combines procedural multi-biome terrain, Newtonian celestial physics, artificial life (bees, bird flocks driven by a flow field), a first-person player controller, a 3D cellular-automata cave carved with Marching Cubes, and a bidirectional portal system tying the surface and the underground together. With the portal system in place, the cave is no longer an isolated mesh — it is a destination the player can reach from the surface world and return from at will, which was the last gap left after iteration 5.
+
+A potential future enhancement, left out of scope for this delivery, would be **dynamic cave lighting** — point lights or torch placements inside the cave to improve underground navigation without relying on emission-only lighting.

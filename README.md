@@ -45,19 +45,14 @@ The fifth iteration made the simulation fully playable and introduced procedural
 * **3D Cave Generation:** A 100×100×40 cellular automata grid (5 smoothing passes) produces organic cave geometry converted to a smooth triangle mesh via the Marching Cubes algorithm.
 * **Marching Cubes:** 256-configuration TriTable lookup, vertex welding for watertight meshes, and triplanar UV mapping for seamless rock texturing.
 
-### [Iteration 6: Portal System & Cave-Surface Integration](./README_ITERATION6.md)
-The sixth iteration connected the underground cave to the surface world and made the cave fully playable.
+### [Iteration 6: Portal System & Cave-Surface Integration (Final)](./README_ITERATION6.md)
+The sixth and final iteration connected the underground cave to the surface world and made the cave fully playable.
 * **Bidirectional Portal System:** Procedurally paired portals spawn at runtime — one on the terrain surface, one on the cave floor. Smart destination logic uses `Physics.Raycast` for safe cave landings and `terrain.SampleHeight` for surface returns.
 * **Cave Interior Collision:** Fixed one-sided `MeshCollider` by reversing Marching Cubes triangle winding order, flipping normals inward so cave walls and floors are solid from inside.
 * **Cave-Surface Integration:** Replaced the broken `SetHoles` approach with a portal spawner that scans the cellular automata grid for valid floor cells and pairs them with the surface portal at runtime.
-
-### [Iteration 7: L-System Village Generation (Exploratory)](./README_ITERATION7.md)
-The seventh iteration began exploring procedural village generation using L-Systems.
-* **L-System Grammar Engine:** Implemented a pure C# `LSystemGenerator` class with a configurable axiom, production rules dictionary, and N-iteration string rewriting using `StringBuilder` for performance.
-* **Koch Curve Road Layout:** Designed the grammar axiom `F+F+F+F` with rule `F → F+F-F-F+F` at 90° angle, generating ~500 draw commands after 3 iterations — the foundation of a procedural road network.
 
 ---
 
 ## Project Status
 
-This project is **complete**. Six fully functional iterations were delivered across the semester, demonstrating the following AI and game development techniques: procedural terrain generation (Perlin Noise, multi-biome splat mapping), Newtonian orbital physics, artificial life (triple sine bee movement, Perlin-modulated velocity), flow field navigation with bird flocks, a first-person player controller, procedural cave generation (3D cellular automata + Marching Cubes), and a bidirectional portal system. A seventh exploratory iteration introduced the foundations of L-System grammar for procedural village generation.
+This project is **complete**. Six fully functional iterations were delivered across the semester, demonstrating the following AI and game development techniques: procedural terrain generation (Perlin Noise, multi-biome splat mapping), Newtonian orbital physics, artificial life (triple sine bee movement, Perlin-modulated velocity), flow field navigation with bird flocks, a first-person player controller, procedural cave generation (3D cellular automata + Marching Cubes), and a bidirectional portal system.

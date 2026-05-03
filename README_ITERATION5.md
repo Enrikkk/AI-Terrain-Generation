@@ -125,6 +125,5 @@ This produces a smooth, continuous mesh instead of blocky cubes.
 - **Cave Entrances**: Debug and complete the terrain integration so caves visibly connect to the surface
 - **Advanced Lighting**: Consider adding dynamic lights inside caves or torches to improve navigation
 - **Procedural Variation**: Experiment with different cellular automata rules or noise functions for diverse cave types
-- **Village Generation**: Next iteration will use L-Systems to procedurally generate surface villages that complement the underground cave network
 
 This iteration was immensely rewarding but challenging. The Marching Cubes algorithm, while conceptually elegant, required precise implementation and careful debugging to achieve a production-quality result. The cave system is now a solid foundation for future expansions!
