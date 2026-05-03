@@ -88,12 +88,6 @@ The fourth iteration heavily expanded the map's complexities, adding water shade
   <i>Bird flocks steering through the grid's flow field — press <code>H</code> to toggle the arrow visualization, <code>P</code>/<code>R</code> to reshuffle the field with Perlin or Gaussian noise.</i>
 </p>
 
-<p align="center">
-  <img src="visuals/images/Screenshot%20from%202026-05-03%2009-17-48.png" alt="Bird flocks dispersed across the upper sky over the multi-biome terrain" width="90%">
-  <br>
-  <i>Flocks dispersed across the upper sky as the flow field carries them across the map.</i>
-</p>
-
 ### [Iteration 5: Player Controller and Cave Systems](./README_ITERATION5.md)
 
 The fifth iteration made the simulation fully playable and introduced procedural underground caves.
