@@ -14,6 +14,58 @@ This project was built iteratively to explore advanced topics in AI for Game Dev
 
 ---
 
+## Getting Started
+
+### Requirements
+
+- **Unity 6000.3.5f2** (Unity 6). Newer Unity 6 patch releases will likely open the project but trigger an "upgrade" prompt — accept at your own risk.
+- Any platform supported by Unity 6 (Windows / macOS / Linux Editor).
+- Roughly 5 GB of free disk space once Unity has imported all assets and built the local `Library/` cache (which is gitignored).
+
+### Clone and open
+
+```bash
+git clone https://github.com/Enrikkk/AI-Terrain-Generation.git
+cd "AI-Terrain-Generation"
+```
+
+In **Unity Hub**, click **Open → Add project from disk** and select the cloned folder. Unity will spend a few minutes regenerating the local `Library/` folder on first open — this is normal and is not committed to the repo.
+
+### Run the simulation
+
+1. In the **Project** window, open the scene at the project root: **`Assets/treeTerrain.unity`**.
+2. Press the **Play** button at the top of the Editor.
+
+The simulation runs entirely from this one scene. You spawn into the procedurally-generated terrain at world center, the day/night cycle starts immediately, the bird flocks begin steering through the flow field, and the cave system + portals are already populated.
+
+> Note: `Assets/Scenes/SampleScene.unity` is the legacy default scene Unity creates with every new project; it is **empty**. Use `treeTerrain.unity` instead. If you want to build a standalone executable, open Build Settings, remove `SampleScene` from the build list, and add the currently-open `treeTerrain` scene.
+
+### Build a standalone executable
+
+`File → Build Settings → Add Open Scenes → Build`. The build target defaults to the Editor's current platform; switch via the platform list inside Build Settings if you want a different target.
+
+---
+
+## Controls
+
+The full set of inputs the simulation listens for:
+
+| Input | Action |
+|-------|--------|
+| `W A S D` | Walk (5 u/s base) |
+| `Shift` (held) | Sprint — 2× ground speed (15 u/s), 3× flight speed (45 u/s) |
+| `Space` | Jump on the ground; ascend while in flight mode |
+| `Ctrl` | Descend while in flight mode |
+| `Mouse` | Look around (pitch/yaw clamped, 2× sensitivity) |
+| `F` | Toggle flight mode — fly freely along the camera's forward direction |
+| `H` | Toggle flow-field arrow visualization on/off (the invisible 100×100 grid that steers the birds) |
+| `P` | Reshuffle the flow field using **Perlin Noise** — produces sweeping unified bird paths |
+| `G` | Reshuffle the flow field using a **Gaussian Distribution** — produces chaotic random bird paths |
+
+Walk into a **portal** ring on the surface to teleport into the underground cave system. Walk into the cave-side portal to return.
+
+---
+
 ## Project Evolution & Iterations
 
 ### [Iteration 1: Setting the Foundation](./README_ITERATION1.md)

@@ -78,3 +78,6 @@ Thumbs.db
 
 # Claude Code context file — do not upload to GitHub
 CLAUDE.md
+
+# Unity / Mono crash dumps
+mono_crash.*
